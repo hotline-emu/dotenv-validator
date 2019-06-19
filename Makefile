@@ -11,10 +11,13 @@ phpunit: ## Run the unit tests
 	vendor/bin/phpunit
 
 phing: ## Run the phing build locally
-	vendor/bin/phing
+	vendor/bin/phing -buildfile phing.xml
 
 build: install phing ## Run the build locally
 
-lint-dockerfile:
+lint-dockerfile: ## Lint the dockerfile
 	docker run --rm -i hadolint/hadolint hadolint \
     	- < Dockerfile
+
+build-dockerfile: lint-dockerfile ## Build the dockerfile
+	docker build .

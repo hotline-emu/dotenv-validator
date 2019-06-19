@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Set some basic project information and targets -->
+<project name="Dotenv Validator" default="build" basedir=".">
+
+    <property name="bin.dir" value="${project.basedir}/vendor/bin" override="tr ue"/>
+    <property name="reports.dir" value="${project.basedir}/reports" override="true"/>
+
+    <!-- Clean up from previous builds -->
+    <target name="clean" description="Cleanup build artifacts">
+        <delete dir="${reports.dir}"/>
+    </target>
+
+    <!-- Prepare for the new build -->
+    <target name="prepare" depends="clean" description="Prepare for build">
+        <mkdir dir="${reports.dir}"/>
+    </target>
+
+    <target name="phplint">
+        <phplint haltonfailure="true" deprecatedAsError="true">
+            <fileset dir="${project.basedir}">
+                <include name="src/**/*.php"/>
+                <include name="tests/**/*.php"/>
+            </fileset>
+        </phplint>
+    </target>
+
+    <!-- PHP Code Sniffer -->
+    <target name="phpcs" description="Check code style with PHP Code Sniffer" depends="prepare">
+        <exec command="${project.basedir}/vendor/bin/phpcs" passthru="true" checkreturn="true"/>
+    </target>
+
+    <!-- PHPUnit -->
+    <target name="phpunit" description="Run unit tests with PHPUnit and Generate code coverage reports"
+            depends="prepare">
+        <exec command="${project.basedir}/vendor/bin/phpunit" passthru="true" checkreturn="true"/>
+    </target>
+
+    <target name="phpmd" description="Run project mess detection" depends="prepare">
+        <phpmd rulesets="codesize,unusedcode,naming">
+            <fileset dir="${project.basedir}">
+                <include name="src/**/*.php"/>
+                <include name="tests/**/*.php"/>
+            </fileset>
+            <formatter type="xml" outfile="${reports.dir}/pmd.xml"/>
+        </phpmd>
+    </target>
+
+    <target name="phpcpd" description="Run copy paste detection" depends="prepare">
+        <phpcpd>
+            <fileset dir="${project.basedir}">
+                <include name="src/**/*.php"/>
+                <include name="tests/**/*.php"/>
+            </fileset>
+            <formatter type="pmd" outfile="${reports.dir}/cpd-pmd.xml"/>
+        </phpcpd>
+    </target>
+
+    <target name="build" depends="clean, prepare, phplint, phpcs, phpunit, phpmd, phpcpd"/>
+</project>
