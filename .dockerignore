@@ -1,0 +1,13 @@
+/.github/
+/reports/
+/tests/
+/vendor/
+.dockerignore
+.gitignore
+composer.lock
+Dockerfile
+LICENSE
+Makefile
+README.md
+phpcs.xml*
+phpunit.xml*

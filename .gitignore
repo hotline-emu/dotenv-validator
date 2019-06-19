@@ -1,0 +1,4 @@
+/reports/
+/vendor/
+phpcs.xml
+phpunit.xml
