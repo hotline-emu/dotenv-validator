@@ -1,0 +1,34 @@
+{
+    "name": "hotline-emu/dotenv-validator",
+    "description": "Validates dotenv files to ensure enforced key value pairs exist",
+    "type": "library",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "hotline-emu",
+            "email": "james.galecki@gmail.com"
+        }
+    ],
+    "config": {
+        "sort-packages": true
+    },
+    "require": {
+        "php": "^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.5",
+        "squizlabs/php_codesniffer": "^3.4",
+        "phing/phing": "^2.16",
+        "roave/security-advisories": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "HotlineEmu\\DotenvValidator\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4" : {
+            "HotlineEmuTest\\DotenvValidator\\": "tests"
+        }
+    }
+}
